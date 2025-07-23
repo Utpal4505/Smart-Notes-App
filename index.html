@@ -14,24 +14,31 @@
 
       <div class="main">
         <div class="left-side">
-          <h1>Add a New Note:</h1>
+          <h1>New Note:</h1>
+          <input id="note-title" type="text" placeholder="Title" required />
           <textarea
             name="new_note"
             id="newnote"
             cols="30"
             rows="7"
             placeholder="Enter Note Here"
+            required
           ></textarea>
 
-          <div class="add-btn" id="btn-add">
-            <img src="/assets/add.svg" alt="Add img not found." />
-            <h3>Add Note</h3>
+          <div class="add-btn">
+            <img src="assets/add.svg" alt="Add img not found." />
+            <h3 id="btn-add">Add Note</h3>
           </div>
         </div>
         <div class="right-side">
-          <h2 id="your_notes">Your Notes</h2>
+          <h2>Your Notes</h2>
+
+          <div id="your_notes">
+            <!-- Adding notes dynamically -->
+          </div>
         </div>
       </div>
     </div>
+    <script src="script.js"></script>
   </body>
 </html>
