@@ -71,7 +71,7 @@ body {
 }
 
 /* Add Button Styling */
-.add-btn {
+#add-btn {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -86,11 +86,11 @@ body {
   transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.add-btn img {
+#add-btn img {
   width: 25px;
 }
 
-.add-btn:hover {
+#add-btn:hover {
   background-color: rgba(209, 209, 209, 0.877);
 }
 #your_notes {
