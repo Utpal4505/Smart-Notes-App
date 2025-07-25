@@ -5,6 +5,7 @@ const addbtn = document.querySelector("#add-btn");
 const allnote = document.querySelector("#your_notes");
 const body = document.querySelector("body");
 const notediv = document.querySelector(".right-side");
+const searchInput = document.querySelector("#search-note");
 const dltbtn_text = "🗑️ Delete";
 const titleicon = "✍️";
 
@@ -69,10 +70,13 @@ function addNewNote() {
     return;
   }
 
+  const tags = extractTagsFromText(noteValue);
+
   const noteObj = {
     id: Date.now(),
     Title: titleValue,
     Note: noteValue,
+    Tags: tags,
   };
 
   const div = createNoteDOM(noteObj);
@@ -95,7 +99,42 @@ function loadFromStorage() {
   });
 }
 
+function searchNotes() {
+  const rawvalue = searchInput.value.trim();
+  const allvalue = rawvalue.toLowerCase().replace("#", "");
+  const allnotes = getNotesFromStorage();
+
+  if (rawvalue.startsWith("#")) {
+    // 🏷️ Tag based search
+    const filtered = allnotes.filter(note => note.Tags.includes(allvalue));
+    displayNotes(filtered);
+  } else {
+    // 🔍 Normal keyword-based search (title + content)
+    const filtered = allnotes.filter(note =>
+      note.Title.toLowerCase().includes(allvalue) ||
+      note.Note.toLowerCase().includes(allvalue)
+    );
+    displayNotes(filtered);
+  }
+}
+
+function extractTagsFromText(text) {
+  const tags = text.match(/#\w+/g); // e.g. ["#school", "#urgent"]
+  return tags ? tags.map((tag) => tag.slice(1).toLowerCase()) : [];
+}
+
+function displayNotes(notesArray) {
+  allnote.innerHTML = ""; // pehle saare old notes hata do
+
+  notesArray.forEach((note) => {
+    const div = createNoteDOM(note);
+    allnote.appendChild(div);
+  });
+}
+
 // -------------------------- Event Listeners --------------------------
 addbtn.addEventListener("click", addNewNote);
+
+searchInput.addEventListener("input", searchNotes)
 
 window.addEventListener("DOMContentLoaded", loadFromStorage);
